@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>QCM sur le CV</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="main.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center p-4">
   <div class="w-full max-w-2xl flex justify-between mb-4">
@@ -47,43 +48,8 @@
     </form>
     <div id="resultat" class="mt-6 text-center text-red-600 font-semibold"></div>
     <div id="formulaireBtn" class="mt-4 text-center hidden">
-      <a href="formulaire.html" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">Continuer vers le formulaire</a>
+      <a href="form.html" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">Continuer vers le formulaire</a>
     </div>
   </div>
-  <script>
-    function corriger() {
-      const reponses = {
-        q1: "b",
-        q2: "c",
-        q3: "c",
-        q4: "a",
-        q5: "b"
-      };
-
-      let erreurs = [];
-
-      for (let [q, bonneRep] of Object.entries(reponses)) {
-        const rep = document.querySelector(`input[name="${q}"]:checked`);
-        if (!rep || rep.value !== bonneRep) {
-          erreurs.push(q.slice(1));
-        }
-      }
-
-      const resultatDiv = document.getElementById("resultat");
-      const formulaireBtn = document.getElementById("formulaireBtn");
-
-      if (erreurs.length === 0) {
-        resultatDiv.textContent = "Bravo ! Toutes les réponses sont correctes.";
-        resultatDiv.classList.remove("text-red-600");
-        resultatDiv.classList.add("text-green-600");
-        formulaireBtn.classList.remove("hidden");
-      } else {
-        resultatDiv.textContent = "La réponse " + erreurs.join(", ") + " est incorrecte. Veuillez réessayer.";
-        resultatDiv.classList.remove("text-green-600");
-        resultatDiv.classList.add("text-red-600");
-        formulaireBtn.classList.add("hidden");
-      }
-    }
-  </script>
 </body>
 </html>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculatrice</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="main.js"></script>
 </head>
 <body class="relative h-screen bg-cover bg-center" style="background-image: url('nerd.jpg');">
   <div class="absolute top-4 left-4 right-4 z-20 flex justify-between">
@@ -47,25 +48,5 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const display = document.getElementById("display");
-
-    function appendToDisplay(value) {
-      display.value += value;
-    }
-
-    function clearDisplay() {
-      display.value = '';
-    }
-
-    function calculate() {
-      try {
-        display.value = new Function('return ' + display.value)();
-      } catch (error) {
-        display.value = 'Erreur';
-      }
-    }
-  </script>
 </body>
 </html>
