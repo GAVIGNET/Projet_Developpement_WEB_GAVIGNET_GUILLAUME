@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>QCM sur le CV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-4">
+  <div class="w-full max-w-2xl flex justify-between mb-4">
+    <a href="index.html" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-900">Accueil</a>
+    <a href="calculatrice.html" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-900">Calculatrice</a>
+  </div>
+  <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl w-full">
+    <h1 class="text-2xl font-bold mb-6 text-center">QCM - Connaissez-vous ce CV ?</h1>
+    <form id="quizForm" class="space-y-6">
+      <div>
+        <p class="font-semibold">1. Quelle est la spécialité du baccalauréat ?</p>
+        <label class="block"><input type="radio" name="q1" value="a" class="mr-2"> Histoire et Géographie</label>
+        <label class="block"><input type="radio" name="q1" value="b" class="mr-2"> Mathématiques et Physique</label> <!-- ✅ -->
+        <label class="block"><input type="radio" name="q1" value="c" class="mr-2"> SVT et Informatique</label>
+      </div>
+      <div>
+        <p class="font-semibold">2. Dans quelle école est-il actuellement ?</p>
+        <label class="block"><input type="radio" name="q2" value="a" class="mr-2"> Epitech</label>
+        <label class="block"><input type="radio" name="q2" value="b" class="mr-2"> 42</label>
+        <label class="block"><input type="radio" name="q2" value="c" class="mr-2"> EPITA</label> <!-- ✅ -->
+      </div>
+      <div>
+        <p class="font-semibold">3. Quelle est la langue maternelle ?</p>
+        <label class="block"><input type="radio" name="q3" value="a" class="mr-2"> Mandarin</label>
+        <label class="block"><input type="radio" name="q3" value="b" class="mr-2"> Anglais</label>
+        <label class="block"><input type="radio" name="q3" value="c" class="mr-2"> Français</label> <!-- ✅ -->
+      </div>
+      <div>
+        <p class="font-semibold">4. Quelle expérience militaire a-t-il eue ?</p>
+        <label class="block"><input type="radio" name="q4" value="a" class="mr-2"> Préparation Militaire Terre</label> <!-- ✅ -->
+        <label class="block"><input type="radio" name="q4" value="b" class="mr-2"> Légion Étrangère</label>
+        <label class="block"><input type="radio" name="q4" value="c" class="mr-2"> Marine Nationale</label>
+      </div>
+      <div>
+        <p class="font-semibold">5. Quelle est une de ses passions ?</p>
+        <label class="block"><input type="radio" name="q5" value="a" class="mr-2"> La peinture</label>
+        <label class="block"><input type="radio" name="q5" value="b" class="mr-2"> La Voile</label> <!-- ✅ -->
+        <label class="block"><input type="radio" name="q5" value="c" class="mr-2"> Le piano</label>
+      </div>
+      <button type="button" onclick="corriger()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 mt-4">Valider</button>
+    </form>
+    <div id="resultat" class="mt-6 text-center text-red-600 font-semibold"></div>
+    <div id="formulaireBtn" class="mt-4 text-center hidden">
+      <a href="formulaire.html" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">Continuer vers le formulaire</a>
+    </div>
+  </div>
+  <script>
+    function corriger() {
+      const reponses = {
+        q1: "b",
+        q2: "c",
+        q3: "c",
+        q4: "a",
+        q5: "b"
+      };
+
+      let erreurs = [];
+
+      for (let [q, bonneRep] of Object.entries(reponses)) {
+        const rep = document.querySelector(`input[name="${q}"]:checked`);
+        if (!rep || rep.value !== bonneRep) {
+          erreurs.push(q.slice(1));
+        }
+      }
+
+      const resultatDiv = document.getElementById("resultat");
+      const formulaireBtn = document.getElementById("formulaireBtn");
+
+      if (erreurs.length === 0) {
+        resultatDiv.textContent = "Bravo ! Toutes les réponses sont correctes.";
+        resultatDiv.classList.remove("text-red-600");
+        resultatDiv.classList.add("text-green-600");
+        formulaireBtn.classList.remove("hidden");
+      } else {
+        resultatDiv.textContent = "La réponse " + erreurs.join(", ") + " est incorrecte. Veuillez réessayer.";
+        resultatDiv.classList.remove("text-green-600");
+        resultatDiv.classList.add("text-red-600");
+        formulaireBtn.classList.add("hidden");
+      }
+    }
+  </script>
+</body>
+</html>
