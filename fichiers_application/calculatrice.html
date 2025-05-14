@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculatrice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="relative h-screen bg-cover bg-center" style="background-image: url('nerd.jpg');">
+  <div class="absolute top-4 left-4 right-4 z-20 flex justify-between">
+    <a href="index.html" class="bg-white bg-opacity-80 px-4 py-2 rounded-lg shadow hover:bg-opacity-100 transition">
+      Accueil
+    </a>
+    <a href="me_contacter.html" class="bg-white bg-opacity-80 px-4 py-2 rounded-lg shadow hover:bg-opacity-100 transition">
+      Me contacter
+    </a>
+  </div>
+  <div class="flex items-center justify-center h-full relative z-10">
+    <div class="w-80 bg-white bg-opacity-90 rounded-2xl shadow-lg p-4 backdrop-blur-sm">
+      <div class="mb-4">
+        <input id="display" type="text" class="w-full text-right text-2xl font-mono p-3 rounded bg-gray-200" disabled />
+      </div>
+      <div class="grid grid-cols-4 gap-3">
+        <button onclick="clearDisplay()" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">C</button>
+        <button onclick="appendToDisplay('(')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">(</button>
+        <button onclick="appendToDisplay(')')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">)</button>
+        <button onclick="appendToDisplay('/')" class="bg-gray-100 hover:bg-gray-200 text-blue-500 text-xl font-semibold p-4 rounded">÷</button>
+
+        <button onclick="appendToDisplay('7')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">7</button>
+        <button onclick="appendToDisplay('8')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">8</button>
+        <button onclick="appendToDisplay('9')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">9</button>
+        <button onclick="appendToDisplay('*')" class="bg-gray-100 hover:bg-gray-200 text-blue-500 text-xl font-semibold p-4 rounded">×</button>
+
+        <button onclick="appendToDisplay('4')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">4</button>
+        <button onclick="appendToDisplay('5')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">5</button>
+        <button onclick="appendToDisplay('6')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">6</button>
+        <button onclick="appendToDisplay('-')" class="bg-gray-100 hover:bg-gray-200 text-blue-500 text-xl font-semibold p-4 rounded">−</button>
+
+        <button onclick="appendToDisplay('1')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">1</button>
+        <button onclick="appendToDisplay('2')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">2</button>
+        <button onclick="appendToDisplay('3')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">3</button>
+        <button onclick="appendToDisplay('+')" class="bg-gray-100 hover:bg-gray-200 text-blue-500 text-xl font-semibold p-4 rounded">+</button>
+
+        <button onclick="appendToDisplay('0')" class="col-span-2 bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">0</button>
+        <button onclick="appendToDisplay('.')" class="bg-gray-100 hover:bg-gray-200 text-xl font-semibold p-4 rounded">.</button>
+        <button onclick="calculate()" class="bg-blue-500 text-white hover:bg-blue-600 text-xl font-semibold p-4 rounded">=</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+
+    function appendToDisplay(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function calculate() {
+      try {
+        display.value = new Function('return ' + display.value)();
+      } catch (error) {
+        display.value = 'Erreur';
+      }
+    }
+  </script>
+</body>
+</html>
