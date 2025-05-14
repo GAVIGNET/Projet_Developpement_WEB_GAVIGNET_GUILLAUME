@@ -1,51 +1,73 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Me Contacter</title>
-    <link href="dist/output.css" rel="stylesheet" />
-  </head>
-  <body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex items-center justify-center p-4">
-
-    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-xl">
-      <h1 class="text-3xl font-bold mb-6 text-center text-blue-700">Mes Contacts</h1>
-
-      <div class="space-y-4 text-lg">
-        <p>
-          📍
-          <a
-            class="text-blue-600 hover:underline"
-            href="https://www.google.fr/maps/place/34+Avenue+du+G%C3%A9n%C3%A9ral+de+Gaulle,+92800+Puteaux/@48.8884772,2.2325054,17z"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            34 avenue du Général de Gaulle, 92800 Puteaux, France
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Me Contacter</title>
+  <link rel="stylesheet" href="form_css.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-screen w-screen flex items-center justify-center relative">
+  <div class="animated-img" id="img1" style="background-image: url('iss.jpg');"></div>
+  <div class="animated-img" id="img2" style="background-image: url('terre.jpg');"></div>
+  <div class="animated-img" id="img3" style="background-image: url('mercure.jpg');"></div>
+  <div class="animated-img" id="img4" style="background-image: url('jupiter.jpg');"></div>
+  <form class="relative z-10 bg-white bg-opacity-90 p-8 rounded-2xl shadow-xl w-[90%] max-w-md space-y-4">
+    <h2 class="text-2xl font-bold text-center text-gray-800">Me Contacter</h2>
+    <div>
+      <p class="font-semibold">Mes Contacts :</p>
+      <ul class="mt-2 text-sm text-gray-700 space-y-1">
+        <li>
+          <a href="https://www.google.fr/maps/place/34+Avenue+du+Général+de+Gaulle,+92800+Puteaux" class="underline text-blue-600" target="_blank">
+            - Adresse : 34 avenue du Général de Gaulle, 92800 Puteaux, France
           </a>
-        </p>
-
-        <p>📧 <strong>Email :</strong> <a class="text-blue-600 hover:underline" href="mailto:mia.rhoades@gmail.com">mia.rhoades@gmail.com</a></p>
-
-        <p>📞 <strong>Téléphone :</strong> 07 59 58 62 46</p>
-
-        <p>
-          💼
-          <a
-            class="text-blue-600 hover:underline"
-            href="https://www.linkedin.com/in/guillaume-gavignet-7b8928337/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Mon LinkedIn
+        </li>
+        <li>- Email : mia.rhoades@gmail.com</li>
+        <li>- Téléphone : 07 59 58 62 46</li>
+        <li>
+          <a href="https://www.linkedin.com/in/guillaume-gavignet-7b8928337/" class="underline text-blue-600" target="_blank">
+            - Mon LinkedIn
           </a>
-        </p>
-      </div>
-
-      <div class="mt-8 flex justify-center gap-4">
-        <a href="index.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Accueil</a>
-        <a href="calculatrice.html" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">Calculatrice</a>
-      </div>
+        </li>
+      </ul>
     </div>
-    
-  </body>
+    <div class="flex justify-between pt-4">
+      <a href="index.html" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">Accueil</a>
+      <a href="calculatrice.html" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">Calculatrice</a>
+    </div>
+  </form>
+  <script>
+    const images = [
+      { id: 'img1', x: 0, y: 0, dx: 2, dy: 2 },
+      { id: 'img2', x: 100, y: 100, dx: 2.5, dy: 1.5 },
+      { id: 'img3', x: 200, y: 200, dx: 1.5, dy: 2.2 },
+      { id: 'img4', x: 300, y: 50, dx: 2.2, dy: 1.8 }
+    ];
+
+    function animate() {
+      const maxX = window.innerWidth;
+      const maxY = window.innerHeight;
+
+      images.forEach(img => {
+        const el = document.getElementById(img.id);
+        const w = el.offsetWidth;
+        const h = el.offsetHeight;
+
+        img.x += img.dx;
+        img.y += img.dy;
+
+        if (img.x <= 0 || img.x + w >= maxX) img.dx = -img.dx;
+        if (img.y <= 0 || img.y + h >= maxY) img.dy = -img.dy;
+
+        el.style.left = img.x + "px";
+        el.style.top = img.y + "px";
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+</body>
 </html>

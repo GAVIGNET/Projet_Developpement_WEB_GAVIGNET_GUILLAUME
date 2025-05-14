@@ -1,4 +1,3 @@
-
 function corriger() {
     const reponses = {
       q1: "b",
@@ -15,6 +14,7 @@ function corriger() {
       if (!rep || rep.value !== bonneRep) {
         erreurs.push(q.slice(1));
       }
+
     }
 
     const resultatDiv = document.getElementById("resultat");
@@ -31,22 +31,4 @@ function corriger() {
       resultatDiv.classList.add("text-red-600");
       formulaireBtn.classList.add("hidden");
     }
-}
-
-const display = document.getElementById("display");
-
-function appendToDisplay(value) {
-  display.value += value;
-}
-
-function clearDisplay() {
-  display.value = '';
-}
-
-function calculate() {
-  try {
-    display.value = new Function('return ' + display.value)();
-  } catch (error) {
-    display.value = 'Erreur';
-  }
-}
+    }
