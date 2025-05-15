@@ -24,7 +24,7 @@ Ce manuel vous guide à travers l'utilisation de l'application web incluse dans 
    - Naviguez via les liens vers les pages :
      - `calculatrice.html` : pour effectuer des calculs
      - `me_contacter.html` : pour répondre au qcm
-     - `form.html` : après avoir eu tout juste au qcm de me_contacter.html, un bouton apparaitra sur la page me_contacter.html
+     - `form.html` : après avoir eu tout correct au qcm de me_contacter.html, un bouton apparaitra sur la page me_contacter.html
 
 2. **Pas d’installation requise** :
    - Tailwind CSS est chargé via le CDN, comme ceci :
@@ -38,13 +38,14 @@ Ce manuel vous guide à travers l'utilisation de l'application web incluse dans 
 ## 🎨 Personnalisation
 
 - Les styles peuvent être modifiés directement dans les fichiers HTML en utilisant les classes Tailwind (`bg-blue-500`, `text-center`, etc.)
-- `form_css.css` contient du CSS personnalisé pour les styles spécifiques à `form.html`
+- `form_css.css` pour personnaliser `form.html`
+- `input.css` pour personnaliser `index.html`
 
 ---
 
 ## 📸 Images
 
-Les images sont probablement utilisées pour enrichir les pages ou illustrer des réponses dans le quiz :
+Les images sont de :
 - `iss.jpg` : Station spatiale
 - `jupiter.jpg`, `mercure.jpg`, `terre.jpg` : Planètes
 - `nerd.jpg` : Image humoristique ou illustrative
@@ -53,7 +54,7 @@ Les images sont probablement utilisées pour enrichir les pages ou illustrer des
 
 ## 📬 Contact
 
-Pour toute remarque ou contribution, vous pouvez utiliser la page `me_contacter.html` pour soumettre un message ou répondre au quiz.
+Pour toute remarque ou contribution, vous pouvez utiliser la page `me_contacter.html` pour soumettre un message accessible après avoir répondu correctement au quiz.
 
 ---
 
