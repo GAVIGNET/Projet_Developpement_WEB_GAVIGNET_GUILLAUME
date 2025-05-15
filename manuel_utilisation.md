@@ -45,7 +45,7 @@ Ce manuel vous guide à travers l'utilisation de l'application web incluse dans 
 
 ## 📸 Images
 
-Les images sont de :
+Les images sont des décorations pour certaines pages :
 - `iss.jpg` : Station spatiale
 - `jupiter.jpg`, `mercure.jpg`, `terre.jpg` : Planètes
 - `nerd.jpg` : Image humoristique ou illustrative
