@@ -60,10 +60,10 @@
       <div class="text-center p-4">
         <h2 class="text-3xl border-b-2 border-black mb-2">FORMATIONS</h2>
         <p class="mb-2"><strong>2021</strong><br>Diplôme National du Brevet - Bien</p>
-        <a class="text-blue-600 text-sm" href="https://www.google.com/maps/place/Lyc%C3%A9e-coll%C3%A8ge+La+Mennais/@-17.5417217,-149.5674517,900m/data=!3m2!1e3!4b1!4m6!3m5!1s0x769a39ff577d4f03:0xaa308214aa3c9769!8m2!3d-17.5417268!4d-149.5648768!16zL20vMGZ6ODgz?entry=ttu&g_ep=EgoyMDI1MDUxMi4wIKXMDSoASAFQAw%3D%3D">Collège-Lycée La Mennais Tahiti</a>
+        <a class="text-blue-600 text-sm" href="https://www.google.com/maps/place/Lyc%C3%A9e-coll%C3%A9ge+La+Mennais/@-17.5417217,-149.5674517,900m/data=!3m2!1e3!4b1!4m6!3m5!1s0x769a39ff577d4f03:0xaa308214aa3c9769!8m2!3d-17.5417268!4d-149.5648768!16zL20vMGZ6ODgz?entry=ttu&g_ep=EgoyMDI1MDUxMi4wIKXMDSoASAFQAw%3D%3D">Collège-Lycée La Mennais Tahiti</a>
 
         <p class="mb-2"><strong>2024</strong><br>Bac Général spé Maths option Mathématiques Expertes et Physique - AB</p>
-        <a class="text-blue-600 text-sm" href="https://www.google.com/maps/place/Lyc%C3%A9e-coll%C3%A8ge+La+Mennais/@-17.5417217,-149.5674517,900m/data=!3m2!1e3!4b1!4m6!3m5!1s0x769a39ff577d4f03:0xaa308214aa3c9769!8m2!3d-17.5417268!4d-149.5648768!16zL20vMGZ6ODgz?entry=ttu&g_ep=EgoyMDI1MDUxMi4wIKXMDSoASAFQAw%3D%3D">Collège-Lycée La Mennais Tahiti</a>
+        <a class="text-blue-600 text-sm" href="https://www.google.com/maps/place/Lyc%C3%A9e-coll%C3%A9ge+La+Mennais/@-17.5417217,-149.5674517,900m/data=!3m2!1e3!4b1!4m6!3m5!1s0x769a39ff577d4f03:0xaa308214aa3c9769!8m2!3d-17.5417268!4d-149.5648768!16zL20vMGZ6ODgz?entry=ttu&g_ep=EgoyMDI1MDUxMi4wIKXMDSoASAFQAw%3D%3D">Collège-Lycée La Mennais Tahiti</a>
 
         <p class="mb-2"><strong>2024 — 2027</strong><br>Bachelor Cybersécurité - EPITA</p>
         <a class="text-blue-600 text-sm" href="https://www.google.com/maps/place/Campus+Cyber/@48.8865871,2.2463004,621m/data=!3m2!1e3!4b1!4m6!3m5!1s0x47e66581bfdeffc3:0x9bd576549e3bef49!8m2!3d48.8865836!4d2.2488753!16s%2Fg%2F11q1hvxfwv?entry=ttu&g_ep=EgoyMDI1MDUxMi4wIKXMDSoASAFQAw%3D%3D">Campus Cyber</a>
@@ -81,28 +81,42 @@
     </div>
   </div>
   <script>
-    const img = document.getElementById("spinning-image");
-    let angle = 0;
+    document.addEventListener("DOMContentLoaded", function () {
+      let angle = 0;
+      let speed = 1;
+      let acceleration = 0.05;
+      let maxSpeed = 100;
+      
+      const image = document.getElementById("spinning-image");
+      
+      if (image) {
+        image.addEventListener("mouseenter", () => {
+          accelerating = true;
+        });
+      
+        image.addEventListener("mouseleave", () => {
+          accelerating = false;
+        });
+      
+        function rotate() {
+          angle += speed;
+          image.style.transform = `rotate(${angle}deg)`;
 
-    function rotateImage() {
-      angle = (angle + currentSpeed) % 360;
-      img.style.transform = `rotate(${angle}deg)`;
-      requestAnimationFrame(rotateImage);
-    }
+          if (image.matches(":hover") && speed < maxSpeed) {
+            speed += acceleration;
+          } else if (!image.matches(":hover") && speed > 1) {
+            speed -= acceleration;
+          }
 
-    let currentSpeed = 0;
-
-    document.addEventListener("mousemove", (e) => {
-      const rect = img.getBoundingClientRect();
-      const dx = e.clientX - (rect.left + rect.width / 2);
-      const dy = e.clientY - (rect.top + rect.height / 2);
-      const distance = Math.sqrt(dx * dx + dy * dy);
-
-      // Plus on est proche, plus la vitesse augmente (inversée par rapport à la distance)
-      currentSpeed = Math.min(10, 300 / (distance + 1)); // Vitesse max 10 deg/frame
+          requestAnimationFrame(rotate);
+        }
+      
+        rotate();
+        
+      } else {
+        console.error("Element with id 'spinning-image' not found.");
+      }
     });
-
-    rotateImage();
   </script>
 </body>
 </html>
