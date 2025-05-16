@@ -34,6 +34,64 @@ function corriger() {
   }
 }
 
+function bruteForceAuto() {
+  const questions = ['q1', 'q2', 'q3', 'q4', 'q5'];
+  const options = ['a', 'b', 'c'];
+  let totalCombinaisons = Math.pow(options.length, questions.length);
+  let current = Array(questions.length).fill(0);
+  let essais = 0;
+  bruteForceEnCours = true;
+
+  document.getElementById("stopBtn").classList.remove("hidden");
+
+  function setAnswers(indexes) {
+    indexes.forEach((optIndex, i) => {
+      const q = questions[i];
+      const val = options[optIndex];
+      const input = document.querySelector(`input[name="${q}"][value="${val}"]`);
+      if (input) input.checked = true;
+    });
+  }
+
+  function increment(indexes) {
+    for (let i = indexes.length - 1; i >= 0; i--) {
+      if (indexes[i] < options.length - 1) {
+        indexes[i]++;
+        return true;
+      } else {
+        indexes[i] = 0;
+      }
+    }
+    return false;
+  }
+
+  function tryNextCombination() {
+    if (!bruteForceEnCours || essais >= totalCombinaisons) {
+      console.log("BruteForce automatique terminé ou arrêté.");
+      document.getElementById("stopBtn").classList.add("hidden");
+      return;
+    }
+
+    setAnswers(current);
+    corriger();
+
+    const resultat = document.getElementById("resultat").textContent;
+    if (resultat.includes("Bravo")) {
+      console.log("Bonne combinaison trouvée :", current.map(i => options[i]).join(", "));
+      bruteForceEnCours = false;
+      document.getElementById("stopBtn").classList.add("hidden");
+      return;
+    }
+
+    essais++;
+    if (increment(current)) {
+      setTimeout(tryNextCombination, 50);
+    }
+  }
+
+  tryNextCombination();
+}
+
 function bruteForceIntelligent() {
   const questions = ['q1', 'q2', 'q3', 'q4', 'q5'];
   const options = ['a', 'b', 'c'];
@@ -94,4 +152,5 @@ function bruteForceIntelligent() {
 
 function stopBruteForce() {
   bruteForceEnCours = false;
+  document.getElementById("stopBtn").classList.add("hidden");
 }
