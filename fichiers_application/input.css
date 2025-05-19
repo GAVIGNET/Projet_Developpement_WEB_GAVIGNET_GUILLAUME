@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 body {
 	background: url('earth.webp') no-repeat center center fixed;
 	background-size: cover;
