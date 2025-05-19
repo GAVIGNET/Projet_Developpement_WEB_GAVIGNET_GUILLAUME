@@ -1,156 +1,158 @@
+const questions = [
+  {
+    question: "1. Quelle est la spécialité du baccalauréat ?",
+    name: "q1",
+    options: { a: "Histoire et Géographie", b: "Mathématiques et Physique", c: "SVT et Informatique" },
+    correct: "b"
+  },
+  {
+    question: "2. Dans quelle école est-il actuellement ?",
+    name: "q2",
+    options: { a: "Epitech", b: "42", c: "EPITA" },
+    correct: "c"
+  },
+  {
+    question: "3. Quelle est la langue maternelle ?",
+    name: "q3",
+    options: { a: "Mandarin", b: "Anglais", c: "Français" },
+    correct: "c"
+  },
+  {
+    question: "4. Quelle expérience militaire a-t-il eue ?",
+    name: "q4",
+    options: { a: "Préparation Militaire Terre", b: "Légion Étrangère", c: "Marine Nationale" },
+    correct: "a"
+  },
+  {
+    question: "5. Quelle est une de ses passions ?",
+    name: "q5",
+    options: { a: "La peinture", b: "La Voile", c: "Le piano" },
+    correct: "b"
+  }
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
 let bruteForceEnCours = false;
 
-function corriger() {
-  const reponses = {
-    q1: "b",
-    q2: "c",
-    q3: "c",
-    q4: "a",
-    q5: "b"
-  };
+const quizContainer = document.getElementById("quizContainer");
+const resultatDiv = document.getElementById("resultat");
+const validateBtn = document.getElementById("validateBtn");
+const formulaireBtn = document.getElementById("formulaireBtn");
+const restartBtn = document.getElementById("restartBtn");
+const bruteForceBtn = document.getElementById("bruteForceBtn");
+const stopBtn = document.getElementById("stopBtn");
 
-  let erreurs = [];
+function showQuestion(index) {
+  const q = questions[index];
+  quizContainer.innerHTML = `
+    <p class="font-semibold">${q.question}</p>
+    ${Object.entries(q.options).map(([key, value]) =>
+      `<label class="block">
+        <input type="radio" name="${q.name}" value="${key}" class="mr-2"> ${value}
+      </label>`
+    ).join("")}
+  `;
+}
 
-  for (let [q, bonneRep] of Object.entries(reponses)) {
-    const rep = document.querySelector(`input[name="${q}"]:checked`);
-    if (!rep || rep.value !== bonneRep) {
-      erreurs.push(q.slice(1));
-    }
+function restartQuiz() {
+  currentQuestionIndex = 0;
+  score = 0;
+  formulaireBtn.classList.add("hidden");
+  restartBtn.classList.add("hidden");
+  resultatDiv.textContent = "";
+  showQuestion(currentQuestionIndex);
+}
+
+validateBtn.onclick = () => {
+  const currentQ = questions[currentQuestionIndex];
+  const selected = document.querySelector(`input[name="${currentQ.name}"]:checked`);
+
+  if (!selected) {
+    resultatDiv.textContent = "Veuillez sélectionner une réponse.";
+    resultatDiv.className = "mt-6 text-center text-red-600 font-semibold";
+    return;
   }
 
-  const resultatDiv = document.getElementById("resultat");
-  const formulaireBtn = document.getElementById("formulaireBtn");
+  if (selected.value === currentQ.correct) {
+    score++;
+  }
 
-  if (erreurs.length === 0) {
-    resultatDiv.textContent = "Bravo ! Toutes les réponses sont correctes.";
-    resultatDiv.classList.remove("text-red-600");
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex < questions.length) {
+    showQuestion(currentQuestionIndex);
+  } else {
+    finishQuiz();
+  }
+};
+
+function finishQuiz() {
+  quizContainer.innerHTML = "";
+  resultatDiv.classList.remove("text-red-600");
+  if (score === questions.length) {
+    resultatDiv.textContent = `Bravo ! Vous avez tout juste (${score}/${questions.length}).`;
     resultatDiv.classList.add("text-green-600");
     formulaireBtn.classList.remove("hidden");
   } else {
-    resultatDiv.textContent = "La réponse " + erreurs.join(", ") + " est incorrecte. Veuillez réessayer.";
-    resultatDiv.classList.remove("text-green-600");
+    resultatDiv.textContent = `Score : ${score}/${questions.length}. Vous devez recommencer.`;
     resultatDiv.classList.add("text-red-600");
-    formulaireBtn.classList.add("hidden");
+    restartBtn.classList.remove("hidden");
   }
 }
 
-function bruteForceAuto() {
-  const questions = ['q1', 'q2', 'q3', 'q4', 'q5'];
-  const options = ['a', 'b', 'c'];
-  let totalCombinaisons = Math.pow(options.length, questions.length);
-  let current = Array(questions.length).fill(0);
-  let essais = 0;
+bruteForceBtn.onclick = () => {
   bruteForceEnCours = true;
+  stopBtn.classList.remove("hidden");
+  formulaireBtn.classList.add("hidden");
+  restartQuiz();
 
-  document.getElementById("stopBtn").classList.remove("hidden");
-
-  function setAnswers(indexes) {
-    indexes.forEach((optIndex, i) => {
-      const q = questions[i];
-      const val = options[optIndex];
-      const input = document.querySelector(`input[name="${q}"][value="${val}"]`);
-      if (input) input.checked = true;
-    });
-  }
-
-  function increment(indexes) {
-    for (let i = indexes.length - 1; i >= 0; i--) {
-      if (indexes[i] < options.length - 1) {
-        indexes[i]++;
-        return true;
-      } else {
-        indexes[i] = 0;
-      }
-    }
-    return false;
-  }
-
-  function tryNextCombination() {
-    if (!bruteForceEnCours || essais >= totalCombinaisons) {
-      console.log("BruteForce automatique terminé ou arrêté.");
-      document.getElementById("stopBtn").classList.add("hidden");
-      return;
-    }
-
-    setAnswers(current);
-    corriger();
-
-    const resultat = document.getElementById("resultat").textContent;
-    if (resultat.includes("Bravo")) {
-      console.log("Bonne combinaison trouvée :", current.map(i => options[i]).join(", "));
+  function tryNextOption(qIndex, optionIndex = 0) {
+    if (!bruteForceEnCours || qIndex >= questions.length) {
       bruteForceEnCours = false;
-      document.getElementById("stopBtn").classList.add("hidden");
-      return;
-    }
-
-    essais++;
-    if (increment(current)) {
-      setTimeout(tryNextCombination, 50);
-    }
-  }
-
-  tryNextCombination();
-}
-
-function bruteForceIntelligent() {
-  const questions = ['q1', 'q2', 'q3', 'q4', 'q5'];
-  const options = ['a', 'b', 'c'];
-  let index = 0;
-  let reponsesTrouvees = {};
-  bruteForceEnCours = true;
-
-  document.getElementById("stopBtn").classList.remove("hidden");
-
-  function tryOption(qIndex, optionIndex) {
-    if (!bruteForceEnCours) {
-      console.log("BruteForce intelligent arrêté.");
-      document.getElementById("stopBtn").classList.add("hidden");
+      stopBtn.classList.add("hidden");
+      finishQuiz();
       return;
     }
 
     const q = questions[qIndex];
+    const options = Object.keys(q.options);
+
+    if (optionIndex >= options.length) {
+      console.log("Aucune réponse correcte trouvée.");
+      bruteForceEnCours = false;
+      stopBtn.classList.add("hidden");
+      finishQuiz();
+      return;
+    }
+
     const val = options[optionIndex];
+    showQuestion(qIndex);
 
-    // Appliquer toutes les réponses déjà trouvées
-    for (let [qq, rep] of Object.entries(reponsesTrouvees)) {
-      const input = document.querySelector(`input[name="${qq}"][value="${rep}"]`);
-      if (input) input.checked = true;
-    }
+    setTimeout(() => {
+      const radio = document.querySelector(`input[name="${q.name}"][value="${val}"]`);
+      if (radio) radio.checked = true;
 
-    // Tester la réponse actuelle
-    const input = document.querySelector(`input[name="${q}"][value="${val}"]`);
-    if (input) input.checked = true;
-
-    corriger();
-
-    const resultat = document.getElementById("resultat").textContent;
-    if (!resultat.includes(qIndex + 1)) {
-      // Réponse correcte
-      reponsesTrouvees[q] = val;
-      index++;
-      if (index >= questions.length) {
-        console.log("Toutes les bonnes réponses ont été trouvées.");
-        bruteForceEnCours = false;
-        document.getElementById("stopBtn").classList.add("hidden");
-        return;
-      }
-      setTimeout(() => tryOption(index, 0), 100);
-    } else {
-      // Essayer option suivante
-      if (optionIndex < options.length - 1) {
-        setTimeout(() => tryOption(qIndex, optionIndex + 1), 100);
-      } else {
-        console.log("Impossible de trouver une bonne réponse pour", q);
-        bruteForceEnCours = false;
-        document.getElementById("stopBtn").classList.add("hidden");
-      }
-    }
+      setTimeout(() => {
+        if (val === q.correct) {
+          score++;
+          currentQuestionIndex++;
+          tryNextOption(currentQuestionIndex, 0);
+        } else {
+          tryNextOption(qIndex, optionIndex + 1);
+        }
+      }, 300);
+    }, 300);
   }
 
-  tryOption(index, 0);
-}
+  tryNextOption(0, 0);
+};
 
-function stopBruteForce() {
+stopBtn.onclick = () => {
   bruteForceEnCours = false;
-  document.getElementById("stopBtn").classList.add("hidden");
-}
+  stopBtn.classList.add("hidden");
+};
+
+window.onload = () => {
+  showQuestion(currentQuestionIndex);
+};

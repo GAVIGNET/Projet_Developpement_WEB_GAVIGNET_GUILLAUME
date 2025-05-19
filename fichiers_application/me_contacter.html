@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>QCM sur le CV</title>
+  <title>QCM - CV</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="main.js"></script>
+  <script defer src="main.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center p-4" style="background-image: url('supernova.jpg');">
   <div class="w-full max-w-2xl flex justify-between mb-4">
@@ -13,45 +13,22 @@
   </div>
   <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl w-full">
     <h1 class="text-2xl font-bold mb-6 text-center">QCM - Connaissez-vous ce CV ?</h1>
-    <form id="quizForm" class="space-y-6">
-      <div>
-        <p class="font-semibold">1. Quelle est la spécialité du baccalauréat ?</p>
-        <label class="block"><input type="radio" name="q1" value="a" class="mr-2"> Histoire et Géographie</label>
-        <label class="block"><input type="radio" name="q1" value="b" class="mr-2"> Mathématiques et Physique</label> <!-- ✅ -->
-        <label class="block"><input type="radio" name="q1" value="c" class="mr-2"> SVT et Informatique</label>
-      </div>
-      <div>
-        <p class="font-semibold">2. Dans quelle école est-il actuellement ?</p>
-        <label class="block"><input type="radio" name="q2" value="a" class="mr-2"> Epitech</label>
-        <label class="block"><input type="radio" name="q2" value="b" class="mr-2"> 42</label>
-        <label class="block"><input type="radio" name="q2" value="c" class="mr-2"> EPITA</label> <!-- ✅ -->
-      </div>
-      <div>
-        <p class="font-semibold">3. Quelle est la langue maternelle ?</p>
-        <label class="block"><input type="radio" name="q3" value="a" class="mr-2"> Mandarin</label>
-        <label class="block"><input type="radio" name="q3" value="b" class="mr-2"> Anglais</label>
-        <label class="block"><input type="radio" name="q3" value="c" class="mr-2"> Français</label> <!-- ✅ -->
-      </div>
-      <div>
-        <p class="font-semibold">4. Quelle expérience militaire a-t-il eue ?</p>
-        <label class="block"><input type="radio" name="q4" value="a" class="mr-2"> Préparation Militaire Terre</label> <!-- ✅ -->
-        <label class="block"><input type="radio" name="q4" value="b" class="mr-2"> Légion Étrangère</label>
-        <label class="block"><input type="radio" name="q4" value="c" class="mr-2"> Marine Nationale</label>
-      </div>
-      <div>
-        <p class="font-semibold">5. Quelle est une de ses passions ?</p>
-        <label class="block"><input type="radio" name="q5" value="a" class="mr-2"> La peinture</label>
-        <label class="block"><input type="radio" name="q5" value="b" class="mr-2"> La Voile</label> <!-- ✅ -->
-        <label class="block"><input type="radio" name="q5" value="c" class="mr-2"> Le piano</label>
-      </div>
-      <button type="button" onclick="corriger()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 mt-4">Valider</button>
-      <button type="button" onclick="bruteForceAuto()" class="bg-red-700 text-white px-6 py-2 rounded-lg hover:bg-red-800 mt-2">BruteForce Automatique</button>
-      <button type="button" onclick="bruteForceIntelligent()" class="bg-purple-700 text-white px-6 py-2 rounded-lg hover:bg-purple-800 mt-2">BruteForce Intelligent</button>
-      <button type="button" onclick="stopBruteForce()" id="stopBtn" class="bg-yellow-600 text-white px-6 py-2 rounded-lg hover:bg-yellow-700 mt-2 hidden">Stop BruteForce</button>
-    </form>
-    <div id="resultat" class="mt-6 text-center text-red-600 font-semibold"></div>
+    <div id="quizContainer" class="space-y-6"></div>
+
+    <div class="flex justify-center gap-4 mt-6">
+      <button id="validateBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Valider</button>
+      <button id="bruteForceBtn" class="bg-purple-700 text-white px-6 py-2 rounded-lg hover:bg-purple-800">BruteForce</button>
+      <button id="stopBtn" class="bg-yellow-600 text-white px-6 py-2 rounded-lg hover:bg-yellow-700 hidden">Stop BruteForce</button>
+    </div>
+
+    <div id="resultat" class="mt-6 text-center text-lg font-semibold"></div>
+
     <div id="formulaireBtn" class="mt-4 text-center hidden">
       <a href="form.html" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">Continuer vers le formulaire</a>
+    </div>
+
+    <div id="restartBtn" class="mt-4 text-center hidden">
+      <button onclick="restartQuiz()" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700">Recommencer</button>
     </div>
   </div>
 </body>
