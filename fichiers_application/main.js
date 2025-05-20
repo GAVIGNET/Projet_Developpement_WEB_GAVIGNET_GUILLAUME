@@ -1,6 +1,6 @@
 const questions = [
   {
-    question: "1. Quelle est la spécialité du baccalauréat ?",
+    question: "1. Quelle a été ma spécialité du baccalauréat ?",
     name: "q1",
     options: { a: "Histoire et Géographie", b: "Mathématiques et Physique", c: "SVT et Informatique" },
     correct: "b"
