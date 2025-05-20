@@ -28,7 +28,6 @@
   <div class="animated-img" id="img3" style="background-image: url('mercure.jpg');"></div>
   <div class="animated-img" id="img4" style="background-image: url('jupiter.jpg');"></div>
 
-  
   <form id="contactForm" class="relative z-10 bg-white bg-opacity-90 p-8 rounded-2xl shadow-xl w-[90%] max-w-md space-y-4">
     <h2 class="text-2xl font-bold text-center text-gray-800">Me Contacter</h2>
 
@@ -50,7 +49,6 @@
       </ul>
     </div>
 
-    
     <div class="space-y-3 pt-4">
       <input type="text" id="nom" placeholder="Nom" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
       <input type="text" id="prenom" placeholder="Prénom" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -58,24 +56,20 @@
       <textarea id="message" placeholder="Votre message..." class="w-full h-32 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" required></textarea>
     </div>
 
-    
     <div class="flex justify-between pt-4">
       <a href="index.html" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">Accueil</a>
       <a href="calculatrice.html" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">Calculatrice</a>
     </div>
 
-    <!-- Bouton envoyer -->
     <div class="text-center pt-4">
       <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">Envoyer</button>
     </div>
   </form>
 
-  
   <div id="confirmation" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded shadow-lg z-50">
     Message prêt à être envoyé !
   </div>
 
-  
   <script>
     const form = document.getElementById("contactForm");
     const confirmation = document.getElementById("confirmation");
@@ -92,12 +86,16 @@
       const mailtoLink = `mailto:mia.rhoades@gmail.com?subject=Message depuis le formulaire de contact&body=${fullMessage}`;
 
       confirmation.classList.remove("hidden");
-      setTimeout(() => confirmation.classList.add("hidden"), 3000);
 
+      // Ouverture du mailto (peut ouvrir un client mail)
       window.location.href = mailtoLink;
+
+      // Redirection après 2 secondes
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2000);
     });
 
-    
     const images = [
       { id: 'img1', x: 0, y: 0, dx: 2, dy: 2 },
       { id: 'img2', x: 100, y: 100, dx: 2.5, dy: 1.5 },
