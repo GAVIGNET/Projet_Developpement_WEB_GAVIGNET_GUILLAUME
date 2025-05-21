@@ -22,7 +22,7 @@
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center p-4 bg-cover bg-center" style="background-image: url('black_hole.jpg');">
-  
+
   <div class="animated-img" id="img1" style="background-image: url('iss.jpg');"></div>
   <div class="animated-img" id="img2" style="background-image: url('terre.jpg');"></div>
   <div class="animated-img" id="img3" style="background-image: url('mercure.jpg');"></div>
@@ -61,8 +61,15 @@
       <a href="calculatrice.html" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">Calculatrice</a>
     </div>
 
+    <!-- Bouton envoyer -->
     <div class="text-center pt-4">
       <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">Envoyer</button>
+    </div>
+
+    <!-- Contrôles de la musique -->
+    <div class="flex justify-center gap-4 pt-4">
+      <button type="button" onclick="pauseMusic()" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">Arrêter la musique</button>
+      <button type="button" onclick="playMusic()" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">Relancer la musique</button>
     </div>
   </form>
 
@@ -86,16 +93,15 @@
       const mailtoLink = `mailto:mia.rhoades@gmail.com?subject=Message depuis le formulaire de contact&body=${fullMessage}`;
 
       confirmation.classList.remove("hidden");
-
-      // Ouverture du mailto (peut ouvrir un client mail)
-      window.location.href = mailtoLink;
-
-      // Redirection après 2 secondes
       setTimeout(() => {
-        window.location.href = "index.html";
+        confirmation.classList.add("hidden");
+        window.location.href = "index.html"; // Redirection après 2 secondes
       }, 2000);
+
+      window.location.href = mailtoLink;
     });
 
+    // Animation des images
     const images = [
       { id: 'img1', x: 0, y: 0, dx: 2, dy: 2 },
       { id: 'img2', x: 100, y: 100, dx: 2.5, dy: 1.5 },
@@ -129,3 +135,4 @@
   </script>
 </body>
 </html>
+
